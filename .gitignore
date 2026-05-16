@@ -22,5 +22,8 @@ data/
 # Eval corpus (downloaded at runtime)
 eval/corpus/
 
+# Generated test PDFs (created at test-session time via reportlab fixtures)
+tests/fixtures/*.pdf
+
 # Docs build output
 docs/_build/

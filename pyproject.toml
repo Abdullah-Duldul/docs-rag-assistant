@@ -29,7 +29,12 @@ build-backend = "hatchling.build"
 packages = ["src/rag_assistant"]
 
 [dependency-groups]
-dev = ["pytest>=8.0.0", "pytest-mock>=3.14.0"]
+dev = [
+    "pytest>=8.0.0",
+    "pytest-mock>=3.14.0",
+    "reportlab>=4.5.1",
+    "ruff>=0.15.13",
+]
 
 [tool.pytest.ini_options]
 testpaths = ["tests"]
