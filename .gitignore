@@ -1,0 +1,26 @@
+# Dependencies / build
+.venv/
+*.egg-info/
+__pycache__/
+*.pyc
+
+# Data (ChromaDB persistence, SQLite, etc.)
+data/
+*.db
+
+# Environment
+.env
+
+# Test / lint caches
+.pytest_cache/
+.ruff_cache/
+.mypy_cache/
+
+# OS
+.DS_Store
+
+# Eval corpus (downloaded at runtime)
+eval/corpus/
+
+# Docs build output
+docs/_build/
