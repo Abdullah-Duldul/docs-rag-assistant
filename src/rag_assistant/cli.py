@@ -113,8 +113,44 @@ def ask(
     top_k: int = typer.Option(5, "--top-k", help="Number of chunks to retrieve"),
     db_path: Path = typer.Option(DEFAULT_DB_PATH, "--db-path", help="Path to ChromaDB store"),
 ) -> None:
-    """Ask a question. TODO: implement in step 5."""
-    typer.echo(f"[stub] Would answer: {question} (top_k={top_k})")
+    """Retrieve relevant chunks and generate a cited answer with Claude."""
+    from rich.console import Console
+    from rich.panel import Panel
+
+    from rag_assistant.generator import generate_answer
+    from rag_assistant.retriever import EmptyStoreError, retrieve
+    from rag_assistant.store import ChunkStore
+
+    console = Console(file=sys.stdout)
+    store = ChunkStore(db_path=db_path)
+
+    try:
+        chunks = retrieve(question, top_k=top_k, store=store)
+    except EmptyStoreError:
+        console.print("[red]Error:[/red] Store is empty. Run `rag ingest <path>` first.")
+        raise typer.Exit(code=1)
+
+    try:
+        result = generate_answer(question, chunks)
+    except ValueError as exc:
+        console.print(f"[red]Error:[/red] {exc}")
+        raise typer.Exit(code=1)
+    except Exception as exc:
+        console.print(f"[red]Error:[/red] API call failed: {exc}")
+        raise typer.Exit(code=1)
+
+    console.print(Panel(result.answer_text, title="Answer", border_style="blue"))
+    console.print("\n  Sources:", style="dim")
+    for i, chunk in enumerate(result.sources, start=1):
+        page_info = f"  page {chunk.page_number}" if chunk.page_number is not None else ""
+        console.print(
+            f"    [{i}]  {chunk.source_file}{page_info}  chunk {chunk.chunk_index}",
+            style="dim",
+        )
+    console.print(
+        f"\n  Tokens: {result.input_tokens} in / {result.output_tokens} out",
+        style="dim",
+    )
 
 
 if __name__ == "__main__":
