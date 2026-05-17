@@ -3,8 +3,11 @@
 from pathlib import Path
 
 import pytest
+from dotenv import load_dotenv
 from reportlab.lib.pagesizes import LETTER
 from reportlab.pdfgen import canvas
+
+load_dotenv()  # so ANTHROPIC_API_KEY-gated eval tests can run without manual env export
 
 
 def _make_two_page_pdf(path: Path) -> None:

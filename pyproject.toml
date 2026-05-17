@@ -39,7 +39,10 @@ dev = [
 [tool.pytest.ini_options]
 testpaths = ["tests"]
 pythonpath = ["src"]
-markers = ["slow: tests that require model download (~80MB)"]
+markers = [
+    "slow: tests that require model download (~80MB)",
+    "eval: end-to-end evaluation tests requiring ANTHROPIC_API_KEY",
+]
 
 [tool.ruff]
 line-length = 100

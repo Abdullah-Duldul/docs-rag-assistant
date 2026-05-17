@@ -1,0 +1,65 @@
+questions:
+  # --- Answerable questions (7) ---
+
+  - question: "What HTTP status code does the Anthropic API return when you exceed the rate limit?"
+    expected_substring: "429"
+    expected_source_file: "rate-limits.md"
+    expected_fallback: false
+    notes: "HTTP 429 is the standard rate-limit response; documented explicitly in rate-limits.md"
+
+  - question: "What HTTP header must be included in all Anthropic API requests for authentication?"
+    expected_substring: "x-api-key"
+    expected_source_file: "getting-started.md"
+    notes: "x-api-key is the primary authentication header; listed in the auth table"
+
+  - question: "What does Anthropic say XML tags help Claude do when processing complex prompts?"
+    expected_substring: "unambiguously"
+    expected_source_file: "use-xml-tags.md"
+    notes: >
+      Verbatim claim from use-xml-tags.md: "XML tags help Claude parse complex prompts
+      unambiguously, especially when your prompt mixes instructions, context, examples,
+      and variable inputs." 'unambiguously' appears in exactly one corpus file.
+
+  - question: "What encoding type does the Claude vision API support for passing images inline in a message?"
+    expected_substring: "base64"
+    expected_source_file: "vision.md"
+    notes: "base64 appears many times in vision.md as the inline encoding method"
+
+  - question: "What parameter in the Messages API is used to provide a system prompt to Claude?"
+    expected_substring: "system"
+    expected_source_file: "messages.md"
+    notes: "The `system` parameter is documented as an optional top-level field in the Messages API"
+
+  - question: "What stop_reason does the API return when Claude wants to use a client tool?"
+    expected_substring: "tool_use"
+    expected_source_file: "tool-use-overview.md"
+    notes: >
+      tool-use-overview.md explicitly states Claude responds with stop_reason: "tool_use"
+      when it wants to invoke a client tool
+
+  - question: "Which Claude model has the largest context window currently available, and how large is it?"
+    expected_substring: "1M tokens"
+    expected_source_file: "models-overview.md"
+    notes: >
+      Both Claude Opus 4.7 and Claude Sonnet 4.6 have a 1M token context window.
+      The substring '1M tokens' appears verbatim in the latest models table.
+
+  # --- Unanswerable questions (3) ---
+
+  - question: "What is Anthropic's stock ticker symbol?"
+    expected_fallback: true
+    notes: >
+      Anthropic is a private company with no stock ticker.
+      The API documentation corpus contains no financial information.
+
+  - question: "What is the API endpoint for generating images with Claude?"
+    expected_fallback: true
+    notes: >
+      Anthropic does not offer an image generation API.
+      Tests resistance to OpenAI/Dall-E knowledge bleed (a common training-data failure mode).
+
+  - question: "What is Anthropic's office address in San Francisco?"
+    expected_fallback: true
+    notes: >
+      Office addresses are not in the API documentation corpus.
+      Tests that the model doesn't fall back on general training-data knowledge.
