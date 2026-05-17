@@ -37,3 +37,13 @@ def blank_page_pdf(tmp_path) -> Path:
     c.showPage()  # page 2: blank
     c.save()
     return path
+
+
+@pytest.fixture
+def fake_embed(monkeypatch):
+    """Patch embed() in rag_assistant.ingest to avoid model load in CLI tests."""
+
+    def _fake(texts: list[str]) -> list[list[float]]:
+        return [[float(i % 7) / 10.0] * 384 for i in range(len(texts))]
+
+    monkeypatch.setattr("rag_assistant.ingest.embed", _fake)
