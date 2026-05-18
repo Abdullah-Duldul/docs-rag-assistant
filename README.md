@@ -217,8 +217,3 @@ Test categories:
 
 MIT. See [LICENSE](LICENSE).
 
----
-
-## Acknowledgments
-
-Built as Project 2 of a 4-project Applied AI engineering portfolio.
