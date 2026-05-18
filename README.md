@@ -40,9 +40,7 @@ no partial answers, no confident guesses. Any hallucination is a hard test failu
 
 ## Demo
 
-![demo GIF placeholder — recording in next commit](docs/demo.gif)
-
-*Terminal recording of `rag ingest` → `rag ask` → `rag eval` coming in the next commit.*
+![docs-rag-assistant demo: rag --help, rag ask with citation, rag ask with anti-hallucination fallback, rag eval with 100/100/100 metrics](docs/demo.gif)
 
 ---
 
